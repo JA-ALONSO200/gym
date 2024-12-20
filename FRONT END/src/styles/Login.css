@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
+.card-primary{
+    border-radius: 5px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.title{
+    font-family: "Alata";
+    font-weight: 700;
+    font-size: 30px;
+}
+.subtitle{
+    font-family: "Alata";
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.mt-200{
+    margin-top: 200px;
+}
+.registrar:hover{
+    font-weight: 700;
+    color: black;
+    text-decoration: underline;
+}
+.requiered{
+    color: red;
+}
+.title-nofound{
+    font-size: 90px;
+    font-weight: bold;
+}
