@@ -1,4 +1,3 @@
-import ClienteView from "../views/ClienteView"
 import TableUser from "./layouts/TableUser"
 function Clientes() {
   return (

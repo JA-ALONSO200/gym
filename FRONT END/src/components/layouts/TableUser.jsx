@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/Login.css";
-
+import Navbar from './Navbar';
 
 function TableUser() {
     const [Datos, setDatos] = useState([]);
-    const [Error, setError] = useState('');
+    const [responsable, setResponsable] = useState([]);
     const [currentClient, setCurrentClient] = useState(null); 
     const [currentCliente, setCurrentCliente] = useState({
       nombre: '',
       cedula: '',
       telefono: '',
       correoElectronico: '',
+      idResponsable: '',
       edad: '',
       estatura: '',
     });
@@ -27,13 +28,26 @@ function TableUser() {
           const data = response.data;
           setDatos(data || []);
         } catch (error) {
-          setError(error);
-          console.error("Error al obtener los datos:", error);
+            console.error("Error al obtener los datos:", error);
+        console.error("Error al obtener los datos:", error);
+        } finally {
+          setIsLoading(false); 
+        }
+      };
+      const buscarResponsable = async () => {
+        try {
+          const response = await axios.get("http://localhost:8080/api/responsables");
+          const data = response.data;
+          setResponsable(data || []);
+          console.log(data);
+        } catch (error) {
+            console.error("Error al obtener los datos:", error);
         } finally {
           setIsLoading(false); 
         }
       };
       buscarDatos();
+      buscarResponsable();
     }, []);
   
     const formatearFecha = (Fecha) => {
@@ -80,6 +94,7 @@ function TableUser() {
         cedula: '',
         telefono: '',
         correoElectronico: '',
+        responsable: '',
         edad: '',
         estatura: '',
       });
@@ -118,7 +133,7 @@ function TableUser() {
         setDatos(response.data || []); 
       } catch (error) {
         alert("Hubo un error al agregar el cliente.");
-        console.error(error.response ? error.response.data : error);
+        console.log(error.response ? error.response.data : error);
       }
     };
   
@@ -140,9 +155,9 @@ function TableUser() {
   
     return (
       <div className="container-fluid">
-        
+        <Navbar />
         <center><p className="title">Clientes</p></center>
-        <h4 className="title">Bienvenido {localStorage.getItem("User")}</h4>
+        <h1 className="title fs-4">Bienvenido {localStorage.getItem("User")}, Al Modulo de Clientes</h1>
         <div className="d-flex justify-content-end">
           <button className="btn-lg btn btn-success me-5 mb-3" name="añadir_usuario" onClick={abrirModal2}><i className="bi bi-person-add"></i></button>
         </div>
@@ -271,6 +286,24 @@ function TableUser() {
                       />
                     </div>
                     <div className="form-group">
+                    <label className="subtitle">Responsable</label>
+                      {responsable && responsable.length > 0 && (
+                        <select
+                          className="form-control"
+                          name="responsable"
+                          value={currentCliente.responsable || ''}
+                          onChange={manejarCambios}
+                        >
+                          <option value="">Seleccionar...</option>
+                          {responsable.map((responsable) => (
+                            <option key={responsable.idResponsable} value={responsable.idResponsable}>
+                              {`${responsable.nombre} - ${responsable.idResponsable}`}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                    </div>
+                    <div className="form-group">
                       <label className="subtitle">Estatura</label>
                       <input
                         type="text"
@@ -348,6 +381,24 @@ function TableUser() {
                         value={currentCliente.edad || ''}
                         onChange={manejarCambios}
                       />
+                    </div>
+                    <div className="form-group">
+                      <label className="subtitle">Responsable</label>
+                      {responsable && responsable.length > 0 && (
+                        <select
+                          className="form-control"
+                          name="responsable"
+                          value={currentCliente.responsable || ''}
+                          onChange={manejarCambios}
+                        >
+                          <option value="">Seleccionar...</option>
+                          {responsable.map((responsable) => (
+                            <option key={responsable.idResponsable} value={responsable.idResponsable}>
+                              {`${responsable.nombre} - ${responsable.idResponsable}`}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </div>
                     <div className="form-group">
                       <label className="subtitle">Estatura</label>

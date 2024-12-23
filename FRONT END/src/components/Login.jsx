@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Login.css";
 import Logo from "../assets/logo.png";
@@ -21,6 +21,10 @@ function Login() {
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem('authToken', '');
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,7 +42,8 @@ function Login() {
       localStorage.setItem('authToken', response.data);
 
       alert('Login exitoso');
-      navigate('/Clientes'); 
+      localStorage.setItem('User', name);
+      navigate('/Dashboard'); 
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       if (error.response) {
