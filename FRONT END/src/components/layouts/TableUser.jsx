@@ -21,19 +21,19 @@ function TableUser() {
     const [isLoading, setIsLoading] = useState(false); 
   
     useEffect(() => {
-      const buscarDatos = async () => {
-        setIsLoading(true); 
+      async function buscarDatos() {
+        setIsLoading(true);
         try {
           const response = await axios.get("http://localhost:8080/api/clientes");
           const data = response.data;
           setDatos(data || []);
         } catch (error) {
-            console.error("Error al obtener los datos:", error);
-        console.error("Error al obtener los datos:", error);
+          console.error("Error al obtener los datos:", error);
+          console.error("Error al obtener los datos:", error);
         } finally {
-          setIsLoading(false); 
+          setIsLoading(false);
         }
-      };
+      }
       const buscarResponsable = async () => {
         try {
           const response = await axios.get("http://localhost:8080/api/responsables");
@@ -62,7 +62,7 @@ function TableUser() {
     };
   
     const eliminarCliente = async (e) => {
-      const clienteId = e.target.value;
+      const clienteId = e.currentTarget.value;
     
       if (window.confirm(`Desea Eliminar el Cliente No. ${clienteId}`)) {
         try {
@@ -156,8 +156,8 @@ function TableUser() {
     return (
       <div className="container-fluid">
         <Navbar />
-        <center><p className="title">Clientes</p></center>
-        <h1 className="title fs-4">Bienvenido {localStorage.getItem("User")}, Al Modulo de Clientes</h1>
+        <center><p className="title">Lista de Clientes</p></center>
+        <h1 className="title fs-4 text-center">Bienvenido {localStorage.getItem("User")}, Al Modulo de Clientes</h1>
         <div className="d-flex justify-content-end">
           <button className="btn-lg btn btn-success me-5 mb-3" name="añadir_usuario" onClick={abrirModal2}><i className="bi bi-person-add"></i></button>
         </div>
@@ -199,7 +199,7 @@ function TableUser() {
                       <td>
                         <center>
                           <button
-                            className="btn btn-danger me-3"
+                            className="btn btn-danger me-xl-3 me-lg-3 me-xxl-3 mb-xs-2 mb-me-2 mb-sm-2 mb-md-0 mb-lg-0 mb-0"
                             value={cliente.idCliente}
                             onClick={eliminarCliente}
                           >

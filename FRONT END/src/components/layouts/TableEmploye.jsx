@@ -6,7 +6,6 @@ import Navbar from './Navbar';
 const EmpleadoList = () => {
   const [empleados, setEmpleados] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [currentEmpleado, setCurrentEmpleado] = useState({
     nombre: '',
     cedula: '',
@@ -30,6 +29,7 @@ const EmpleadoList = () => {
     setCurrentEmpleado(null);
   };
 
+  
   useEffect(() => {
     const fetchEmpleados = async () => {
       try {
@@ -37,7 +37,6 @@ const EmpleadoList = () => {
         setEmpleados(data);
       } catch (error) {
          console.error('Error al obtener empleados:', error);
-        setError('No se pudo obtener la lista de empleados');
       } finally {
         setLoading(false);
       }
@@ -47,11 +46,11 @@ const EmpleadoList = () => {
   }, []);
 
   const eliminarEmpleado = async (e) => {
-    const clienteId = e.target.value;
+    const responsableId = e.currentTarget.value;
   
-    if (window.confirm(`Desea Eliminar el Cliente No. ${clienteId}`)) {
+    if (window.confirm(`Desea Eliminar el Empleado No. ${responsableId}`)) {
       try {
-        await EmpleadoService.deleteEmpleado(clienteId);
+        await EmpleadoService.deleteEmpleado(responsableId);
         alert('Empleado eliminado correctamente');
         setEmpleados(await EmpleadoService.getEmpleados());
       } catch (error) {
@@ -69,13 +68,12 @@ const EmpleadoList = () => {
       setIsModalOpen(false);
       setEmpleados(await EmpleadoService.getEmpleados());
     } catch (error) {
-      alert("Hubo un error al actualizar el cliente.");
+      alert("Hubo un error al actualizar el Empleado.");
       console.error(error);
     }
   };
 
   if (loading) return <div>Cargando...</div>;
-  if (error) return <div>{error}</div>;
   
   const formatearFecha = (Fecha) => {
     const FechaF = new Date(Fecha);
@@ -130,19 +128,19 @@ const EmpleadoList = () => {
       setIsModalOpenTwo(false);
       setEmpleados(await EmpleadoService.getEmpleados());
     } catch (error) {
-      alert("Hubo un error al agregar el cliente.");
+      alert("Hubo un error al agregar el Empleado.");
       console.error(error.response ? error.response.data : error);
     }
   };
 
   return (
-    <div>
+    <div className="container-fluid">
       <Navbar />
-      <h1 className="title fs-4 text-center">Bienvenido {localStorage.getItem("User")}, Al Modulo de Empleados</h1>
       <ul>
-          <div className="table-responsive">
+        <div className="table-responsive">
           <h2 className='title text-center'>Lista de Empleados</h2>
-          <div class="d-flex justify-content-end"><button className="btn btn-success mb-3 me-5" onClick={abrirModal2}>Añadir Empleado</button></div>
+          <h1 className="title fs-4 text-center">Bienvenido {localStorage.getItem("User")}, Al Modulo de Empleados</h1>
+          <div class="d-flex justify-content-end"><button className="btn btn-lg btn-success mb-3 me-5" onClick={abrirModal2}><i className="bi bi-person-add"></i></button></div>
           <table className="table table-bordered">
             <thead className="table-info">
               <tr>
@@ -174,7 +172,7 @@ const EmpleadoList = () => {
                     <td>
                       <center>
                         <button
-                          className="btn btn-danger me-3"
+                          className="btn btn-danger me-xl-3 me-lg-3 me-xxl-3 mb-xs-2 mb-me-2 mb-sm-2 mb-md-0 mb-lg-0 mb-0"
                           value={empleado.idEmpleado}
                           onClick={eliminarEmpleado}
                         >
@@ -198,8 +196,7 @@ const EmpleadoList = () => {
               )}
             </tbody>
           </table>
-        </div>
-        
+        </div> 
       </ul>
 
       {isModalOpen && currentEmpleado && (
@@ -207,7 +204,7 @@ const EmpleadoList = () => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="title">Editar Cliente</h5>
+                  <h5 className="title">Editar Empleado</h5>
                 </div>
                 <form onSubmit={actualizarEmpleado}>
                   <div className="modal-body">
@@ -291,7 +288,7 @@ const EmpleadoList = () => {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="title">Añadir Cliente</h5>
+                  <h5 className="title">Añadir Empleado</h5>
                 </div>
                 <form onSubmit={agregarCliente}>
                   <div className="modal-body">

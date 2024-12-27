@@ -37,7 +37,7 @@ const deleteResponsable = async (id) => {
         const response = await axios.delete(`${API_URL}/${id}`);
         return Responsable.fromApiResponse(response.data); 
     } catch (error) {
-        throw new Error('Error al actualizar el Responsable');
+        throw new Error('Error al actualizar el Responsable')
     }
 }
 const updateResponsable = async (id, responsable) => {

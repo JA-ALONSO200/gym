@@ -1,0 +1,7 @@
+.nav-link:hover{
+    outline: solid 1px #000000;
+    transition: 0.5s ease-in;
+    scale: 1.1;
+    background-color: #b1b1b151;
+    color: #ffffff;
+}

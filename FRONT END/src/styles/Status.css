@@ -1,0 +1,16 @@
+.estado-operativa {
+  color: green !important;
+  font-weight: bold !important;
+}
+
+.estado-inhabilitada {
+  color: red !important;
+  font-weight: bold !important;
+}
+
+.estado-default {
+  color: black !important;
+  font-weight: bold !important;
+}
+
+  

@@ -98,7 +98,7 @@ function Login() {
               />
             </div>
             <p className="ms-3 subtitle">¿No tienes cuenta?</p>
-            <Link to="/Registrar" className="text-dark nav-link registrar ms-3">
+            <Link to="/Registrar" className="text-dark nav registrar ms-3">
               Registrarse
             </Link>
             <center>
